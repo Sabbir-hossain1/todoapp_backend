@@ -2,10 +2,11 @@ from User.models import CustomUser
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from User.Serializers.UserModelSerializer import (
-    UserModelCreateUpdateSerializer,
+    UserModelUpdateSerializer,
     UserModelRetrieveSerializer,
     UserModelDeleteSerializer,
     UserModelListSerializer,
+    UserModelCreateSerializer,
 )
 from User.permissions import IsAdmin, IsManager
 
@@ -25,8 +26,10 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         # Use different serializers based on the action
-        if self.action in ["create", "update", "partial_update"]:
-            return UserModelCreateUpdateSerializer
+        if self.action == "create":
+            return UserModelCreateSerializer
+        if self.action in ["update", "partial_update"]:
+            return UserModelUpdateSerializer
         elif self.action == "retrieve":
             return UserModelRetrieveSerializer
         elif self.action == "list":

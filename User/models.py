@@ -42,3 +42,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_user(self):
         return self.role == self.Roles.USER
+
+
+import uuid
+
+
+class PasswordResetCode(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="rest_codes"
+    )
+    code = models.UUIDField(default=uuid.uuid4, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+
+def is_expired(self):
+    return timezone.now() > self.expires_at

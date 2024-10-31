@@ -1,5 +1,4 @@
 from django.contrib.auth.models import BaseUserManager
-from User.models import CustomUser
 
 
 class CustomUserManager(BaseUserManager):
@@ -13,6 +12,8 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        from User.models import CustomUser
+
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("role", CustomUser.Roles.ADMIN)
