@@ -1,8 +1,9 @@
 from django.db import models
 from User.models import CustomUser
+from taskapp.Models.tagModel import Tag
 
 
-class Task(models.Model):
+class TaskModel(models.Model):
     PRIORITY_CHOICES = [
         ("L", "Low"),
         ("M", "Medium"),
@@ -16,6 +17,7 @@ class Task(models.Model):
         ("CANCELLED", "Cancelled"),
     ]
 
+    created_by = models.ForeignKey("User.CustomUser", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     assigned_to = models.ForeignKey(
@@ -37,7 +39,7 @@ class Task(models.Model):
     )
 
     # Tags for flexible categorization
-    tags = models.ManyToManyField("Tag", blank=True, related_name="tasks")
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
 
     def __str__(self):
         return self.title

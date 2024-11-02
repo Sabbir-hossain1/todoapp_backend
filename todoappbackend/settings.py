@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "User",
     "rest_framework",
     "rest_framework_simplejwt",
-    "Task",
+    "taskapp",
 ]
 
 REST_FRAMEWORK = {
